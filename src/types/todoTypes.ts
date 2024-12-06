@@ -14,3 +14,8 @@ export type UpdatedTodo = {
   todo: Todo;
   id: number;
 }
+
+export type PaginationProps = {
+  page?: number;
+  limit?: number;
+}

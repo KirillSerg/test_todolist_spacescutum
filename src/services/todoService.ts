@@ -1,11 +1,12 @@
 import { AxiosResponse } from "axios";
 import api from "../api/api";
-import { CreatedTodo, CreateTodo, Todo, UpdatedTodo } from "../types/todoTypes";
-
-type PaginationProps = {
-  page?: number;
-  limit?: number;
-}
+import {
+  CreatedTodo,
+  CreateTodo,
+  PaginationProps,
+  Todo,
+  UpdatedTodo
+} from "../types/todoTypes";
 
 const getTodos = async (props: PaginationProps): Promise<AxiosResponse<Todo[]>> => {
   return await api.get("todos", {
