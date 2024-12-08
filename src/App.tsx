@@ -1,21 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
-import { Todo } from "./types/todoTypes";
 import { useAppDispatch, useAppSelector } from "./redux/store";
 import { todoActions, TodoState } from "./redux/slices/todoSlice";
+import { Pagination } from "./components/pagination/Pagination";
+import { TodoList } from "./components/todoList/TodoList";
 
 import styles from "./App.module.css";
-import { Pagination } from "./components/pagination/Pagination";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const perPageLimit = 10;
 
   const dispatch = useAppDispatch();
-  const { items, totalItemsNumber } = useAppSelector<TodoState>(
-    state => state.todos
-  );
-
-  const totalPages = Math.ceil(totalItemsNumber / perPageLimit);
+  const { totalItemsNumber } = useAppSelector<TodoState>(state => state.todos);
 
   const fetchTodos = useCallback(async () => {
     dispatch(
@@ -36,27 +32,6 @@ const App = () => {
     );
   }, [dispatch, todoActions]);
 
-  const onUpdateTodo = useCallback(
-    (todo: Todo) => {
-      dispatch(
-        todoActions.updateTodo({
-          userId: todo.id,
-          title: "Updated todo",
-          completed: todo.completed,
-          id: todo.id,
-        })
-      );
-    },
-    [dispatch, todoActions]
-  );
-
-  const onDeleteTodo = useCallback(
-    async (id: number) => {
-      dispatch(todoActions.deleteTodo(id));
-    },
-    [dispatch, todoActions]
-  );
-
   useEffect(() => {
     fetchTodos();
   }, [fetchTodos]);
@@ -64,17 +39,16 @@ const App = () => {
   return (
     <main className={styles["main"]}>
       <h1 className={styles["header"]}>TODO list</h1>
-      <button onClick={() => onCreateTodo()}>Add todo</button>
-      {items.length > 0 &&
-        items.map(todo => (
-          <div key={todo.id}>
-            <div>{todo.title}</div>
-            <button onClick={() => onDeleteTodo(todo.id)}>delete</button>
-            <button onClick={() => onUpdateTodo(todo)}>update</button>
-          </div>
-        ))}
+      <div>
+        <p>
+          Total todo: <b>{totalItemsNumber}</b>
+        </p>
+      </div>
+      <button className={styles["add-todo-btn"]} onClick={() => onCreateTodo()}>
+        Add new todo
+      </button>
+      <TodoList />
       <Pagination
-        // totalPages={totalPages}
         totalCount={totalItemsNumber}
         currentPage={currentPage}
         onPageChange={setCurrentPage}

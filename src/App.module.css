@@ -1,7 +1,14 @@
 .main {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   max-width: 1440px;
   margin: 0 auto;
   .header {
     text-align: center;
+  }
+  .add-todo-btn {
+    background-color: lightgreen;
+    width: fit-content;
   }
 }

@@ -1,0 +1,39 @@
+.todo-item {
+  display: flex;
+  gap: 10px;
+
+  input[type="checkbox"] {
+    cursor: pointer;
+  }
+  .todo-item_title {
+    padding: 0 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 16px;
+    &.complited {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+  }
+  input[type="text"] {
+    border: 2px solid black;
+  }
+  .container-todoBtn {
+    display: flex;
+    gap: 5px;
+    .todoBtn {
+      all: unset;
+      border: 1px solid transparent;
+      width: 24px;
+      height: 24px;
+      &:hover {
+        cursor: pointer;
+        border: 1px solid grey;
+      }
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}
