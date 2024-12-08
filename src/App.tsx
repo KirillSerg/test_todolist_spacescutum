@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "./redux/store";
 import { todoActions, TodoState } from "./redux/slices/todoSlice";
 
 import styles from "./App.module.css";
-import { Pagination } from "./components/Pagination";
+import { Pagination } from "./components/pagination/Pagination";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,9 +74,11 @@ const App = () => {
           </div>
         ))}
       <Pagination
-        totalPages={totalPages}
+        // totalPages={totalPages}
+        totalCount={totalItemsNumber}
         currentPage={currentPage}
-        onClick={setCurrentPage}
+        onPageChange={setCurrentPage}
+        pageSize={perPageLimit}
       />
     </main>
   );
