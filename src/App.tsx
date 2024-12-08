@@ -2,16 +2,20 @@ import { useCallback, useEffect, useState } from "react";
 import { Todo } from "./types/todoTypes";
 import { useAppDispatch, useAppSelector } from "./redux/store";
 import { todoActions, TodoState } from "./redux/slices/todoSlice";
-import todoService from "./services/todoService";
 
 import styles from "./App.module.css";
+import { Pagination } from "./components/Pagination";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const perPageLimit = 10;
 
   const dispatch = useAppDispatch();
-  const { items } = useAppSelector<TodoState>(state => state.todos);
+  const { items, totalItemsNumber } = useAppSelector<TodoState>(
+    state => state.todos
+  );
+
+  const totalPages = Math.ceil(totalItemsNumber / perPageLimit);
 
   const fetchTodos = useCallback(async () => {
     dispatch(
@@ -69,6 +73,11 @@ const App = () => {
             <button onClick={() => onUpdateTodo(todo)}>update</button>
           </div>
         ))}
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onClick={setCurrentPage}
+      />
     </main>
   );
 };

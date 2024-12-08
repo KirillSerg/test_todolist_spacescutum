@@ -10,11 +10,13 @@ export enum STATUS {
 
 export interface TodoState {
   items: Todo[];
+  totalItemsNumber: number;
   status: STATUS;
 }
 
 const initialState: TodoState = {
   items: [],
+  totalItemsNumber: 0,
   status: STATUS.idle,
 };
 
@@ -50,6 +52,8 @@ const todoSlice = createSlice({
       .addCase(getTodos.fulfilled, (state, { payload }) => {
         state.status = STATUS.idle;
         state.items = payload.data;
+        const total = payload.headers["x-total-count"];
+        state.totalItemsNumber = (total ? parseInt(total, 10) : 0)
       })
       .addCase(getTodos.rejected, (state) => {
         state.status = STATUS.failed;
